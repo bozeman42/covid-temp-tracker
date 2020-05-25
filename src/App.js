@@ -1,4 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom'
+
 import './App.css';
 import Chart from './Chart'
 import ReadingInput from './ReadingInput'
@@ -11,27 +18,26 @@ function App() {
   // const [ triggerLoad, setTriggerLoad ] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
-      // if (user) {
-        const result = await fetch('/api/temperatures/user/1')
-        const dataResult = await result.json()
-        setData(dataResult)
-      // }
+      const result = await fetch('/api/temperatures/user/1')
+      const dataResult = await result.json()
+      setData(dataResult)
     }
     fetchData()
     setNewPost(false)
   }, [ newPost ])
-  // useEffect(async () => {
-  //   if (!users) {
-      
-  //   }
-  // })
-
-
+  
   return (
-    <div className="App">
-      <Chart data={data} />
-      <ReadingInput setNewPost={setNewPost} />
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/chart">
+            <Chart data={data} />
+            <ReadingInput setNewPost={setNewPost} />
+          </Route>
+          <Route path="/">Hello!</Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
