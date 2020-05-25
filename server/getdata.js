@@ -1,0 +1,1 @@
+`select (array_agg(temperatures.temperature), array_agg(temperatures.time)) from users join temperatures on users.id = temperatures.user_id where users.id = 1 group by temperatures.time, users.username order by temperatures.time;`

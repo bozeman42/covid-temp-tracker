@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import Chart from './Chart'
+import ReadingInput from './ReadingInput'
 
 function App() {
+  // const [ user, setUser ] = useState(1)
+  const [data, setData] = useState([])
+  const [ newPost, setNewPost ] = useState(false)
+  // const [ users, setUsers ] = useState([])
+  // const [ triggerLoad, setTriggerLoad ] = useState(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      // if (user) {
+        const result = await fetch('/api/temperatures/user/1')
+        const dataResult = await result.json()
+        setData(dataResult)
+      // }
+    }
+    fetchData()
+    setNewPost(false)
+  }, [ newPost ])
+  // useEffect(async () => {
+  //   if (!users) {
+      
+  //   }
+  // })
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Chart data={data} />
+      <ReadingInput setNewPost={setNewPost} />
     </div>
   );
 }
